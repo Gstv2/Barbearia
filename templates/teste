@@ -1,0 +1,16 @@
+Precisa:
+login, register e logout
+usarios:
+    Admin
+        cadastrar produto
+        vizualizar clientes
+        vizualizar agendamento
+    User
+        vizualizar produto
+        Realizar compra
+        Agendar corte
+        vizualizar Funcionario
+Contato
+home
+agendamento
+
