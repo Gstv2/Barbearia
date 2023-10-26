@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>loja</title>
+        <link rel="stylesheet" href="{{ url_for('static',filename='estilo_loja.css')}}">
+
+</head>
+<body>
+        <nav>
+          <a href="/">telainicial</a> 
+          <a href="/loja">loja</a> 
+          <a href="/usuarios">usuario</a> 
+          <a href="/logout">Logout</a>
+   
+  
+        </nav>
+        <div class="column" style="background-color: gray; max-width: 300px; align-content: center; margin-left: 42%; padding: 10px; opacity: 80%;">
+                <button class="card-button-adicionar" id="reloadButton" onclick="adicionarProduto(this.parentNode)">Adicionar Nova produto</button>
+                <div class="column-header"></div>
+                <!-- Loop pelas produtos do Backlog -->
+                {% for produto in produtos %}
+                <div class="card" id="{{ produto.id }}">
+                        <div class="card-title" style="color:aliceblue">{{ produto.title }}</div>
+                        <div class="card-description" style="color:aliceblue">{{ produto.description }}</div>
+                        <button class="card-button" onclick="removerProduto(this)", data-task-id="{{ produto.id }}">remover</button>
+                        <button class="card-button_edit" onclick="editCard(this)" data-task-id="{{ produto.id }}">edit</button>
+                </div>
+                {% endfor %}
+        </div>
+</body>
+<script>
+    function editCard(button) {
+    // Obtém o ID da produto associado ao botão clicado
+    let cardId = button.getAttribute('data-task-id');
+
+    // Obtém os dados atuais da produto (título e descrição) do cartão
+    let card = document.getElementById(cardId);
+    let currentTitle = card.querySelector('.card-title').textContent;
+    let currentDescription = card.querySelector('.card-description').textContent;
+
+    // Pede ao usuário que insira os novos valores para o título e descrição
+    let newTitle = prompt("Digite o novo título da produto:", currentTitle);
+    let newDescription = prompt("Digite a nova descrição da produto:", currentDescription);
+
+    // Verifica se o usuário inseriu novos valores e se o botão Cancelar não foi pressionado
+    if (newTitle !== null && newDescription !== null) {
+      // Atualiza os dados no cartão
+      card.querySelector('.card-title').textContent = newTitle;
+      card.querySelector('.card-description').textContent = newDescription;
+
+      // Faça uma solicitação AJAX para atualizar os dados no servidor
+      fetch(`/edit_product/${cardId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          newTitle: newTitle,
+          newDescription: newDescription
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.message) {
+          // A produto foi atualizada com sucesso no servidor
+          alert("produto atualizada com sucesso!");
+        } else {
+          // Ocorreu um erro ao atualizar a produto no servidor
+          alert("Erro ao atualizar a produto.");
+        }
+      });
+    }
+  }
+
+  
+  // Função para adicionar uma nova produto a uma coluna
+  function adicionarProduto(column) {
+    let cardTitle = prompt("Digite o título do produto:");
+    let cardDescription = prompt("Digite a descrição do produto:");
+
+    if (cardTitle && cardDescription) {
+      // Crie uma nova produto no front-end
+      let cardId = Date.now();
+      let card = criarCard(cardId, cardTitle, cardDescription);
+      
+      // Adicione a nova produto ao banco de dados
+      fetch('/add_product', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          title: cardTitle,
+          description: cardDescription
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          // A produto foi adicionada com sucesso, agora a incluímos no quadro
+          column.insertBefore(card, column.lastChild);
+        } else {
+          alert("Erro ao adicionar a produto.");
+        }
+      });
+    }
+    location.reload();
+  }
+  
+  // Função para criar um novo cartão de produto
+  function criarCard(id, title, description) {
+    let card = document.createElement('div');
+    card.id = id;
+    card.className = 'card';
+    
+    let cardTitleElement = document.createElement('div');
+    cardTitleElement.className = 'card-title';
+    cardTitleElement.textContent = title;
+    
+    let cardDescriptionElement = document.createElement('div');
+    cardDescriptionElement.className = 'card-description';
+    cardDescriptionElement.textContent = description;
+    
+    let cardButton = document.createElement('button');
+    cardButton.className = 'card-button';
+    cardButton.textContent = 'Remover';
+    cardButton.onclick = function () {
+      removerProduto(this);
+    };
+    
+    card.appendChild(cardTitleElement);
+    card.appendChild(cardDescriptionElement);
+    card.appendChild(cardButton);
+
+    return card;
+  }
+  
+  function removerProduto(button) {
+    let card = button.parentNode;
+    let produto_id = button.getAttribute('data-task-id'); // Obtenha o ID da produto
+
+    // Faça uma solicitação para remover a produto do banco de dados
+    fetch('/remove_product/' + produto_id, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.message) {
+        // A produto foi removida com sucesso do banco de dados, agora a removemos da interface
+        location.reload()
+        column.removeChild(card);
+      } else {
+        alert("Erro ao remover a produto.");
+      }
+    });
+  }
+</script>
+</html>
