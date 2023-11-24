@@ -126,7 +126,7 @@ def register():
             db_session.add(new_user)
             db_session.commit()
             session['user_email'] = new_user.email
-            return redirect('/loja')
+            return redirect('/')
         except Exception as e:
             db_session.rollback()
             mensagem_erro = 'Usuário já existente.'

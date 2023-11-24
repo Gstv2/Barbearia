@@ -3,6 +3,13 @@
 .azul     { color: #4a688e; }
 .vermelho { color: #e83654; }
 
+
+.section-expedient .content .content-expedient p{
+
+    margin-bottom: 10px;
+}
+
+
 .title { width:100%; float:left; margin-bottom:40px; padding-bottom:10px;  font-family:'open_sansbold'; font-size:2em; font-weight:bold; text-transform:uppercase; }
 .title.center { text-align:center; }
 

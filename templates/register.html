@@ -3,39 +3,53 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>register</title>
-        <link rel="stylesheet" href="{{ url_for('static',filename='estilo_loja.css')}}">
+        <title>tela de login</title>
+        <link rel="stylesheet" href="{{ url_for('static',filename='style-login.css')}}">
 
 </head>
 <body>
-    <nav>
-        <a href="/">telainicial</a> |
-        <a href="/loja">loja</a> |
-        <a href="/login">Login</a>
-        <a href="/register">register</a>
+    <div class="container-login">
+        <div class="img-box">
+            <img src="{{ url_for('static',filename='uploads/capa/banner-home.jpg')}}" alt="">
+        </div>
+        <div class="container-box">
+            <div class="form-box">
+              <h2>Registrar</h4>
+                <form class="form-box" action="{{ url_for('register') }}" method="POST">
+                    <div class="input-box">
+                      <input type="text" placeholder="Nome" name="nome" required>
+                      <i class="input-icon uil uil-user"></i>
+                    </div>
+                    <div class="input-box">
+                      <input type="tel" placeholder="Telefone" maxlength="9" name="telefone" required>
+                      <i class="input-icon uil uil-phone"></i>
+                    </div>
+                    <div class="input-box">
+                      <input type="email" placeholder="Email" name="email" required>
+                      <i class="input-icon uil uil-at"></i>
+                    </div>
+                    <div class="input-box">
+                      <input type="password" id="pwd" placeholder="Senha" maxlength="8" name="senha" required>
+                    </div>
+                    <div class="remember">
+                      <input  type="checkbox" id="chk"> mostrar senha
+                    </div>
+                    <div class="input-box">
+                        <input type="submit" placeholder="Entrar">
+                    </div>
+                    <div class="input-box">
+                        <p>ja tem uma conta? <a href="login">logar-se</a></p>
+                    </div>
+                </form>
+                <h3>Logar com</h3>
+                <ul class="ul">
+                    <li><img src="{{ url_for('static',filename='img/facebook.png')}}"></li>
+                    <li><img src="{{ url_for('static',filename='img/google.png')}}"></li>
+                </ul>
+            </div>
+        </div>
+    </div>
    
-
-    </nav>
-    <form action="{{ url_for('register') }}" method="POST">
-        <h4 class="mb-3 pb-3">Registrar</h4>
-        <div class="form-group">
-          <input type="text" class="form-style" placeholder="Nome" name="nome" required>
-          <i class="input-icon uil uil-user"></i>
-        </div>
-        <div class="form-group mt-2">
-          <input type="tel" class="form-style" placeholder="Telefone" maxlength="9" name="telefone" required>
-          <i class="input-icon uil uil-phone"></i>
-        </div>
-        <div class="form-group mt-2">
-          <input type="email" class="form-style" placeholder="Email" name="email" required>
-          <i class="input-icon uil uil-at"></i>
-        </div>
-        <div class="form-group mt-2">
-          <input type="password" id="pwd" class="form-style" placeholder="Senha" maxlength="8" name="senha" required>
-          <input type="checkbox" id="chk"> mostrar senha
-          <i class="input-icon uil uil-lock-alt"></i>
-        </div>
-        <button type="submit" class="btn mt-4">Registrar</button>
 
 </body>
 </html>

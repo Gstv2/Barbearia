@@ -18,15 +18,15 @@
                 <form class="form-box" action="{{ url_for('login') }}" method="POST">
                     <div class="input-box">
                         <span>Username</span>
-                        <input type="email" placeholder="@gmail.com">
+                        <input type="email" class="form-style" placeholder="@gmail.com" name="email" required>
                     </div>
                     <div class="input-box">
                         <span>password</span>
-                        <input type="password" placeholder="password">
+                        <input type="password" id="pwd" class="form-style" placeholder="Senha" name="senha" required>
                     </div>
                     <div class="remember">
                         <label>
-                            <input type="checkbox">lembrar
+                            <input type="checkbox"> lembrar
                             <a href="#">Esqueceu a Senha?</a>
                         </label>
                     </div>
@@ -34,7 +34,7 @@
                         <input type="submit" placeholder="Entrar">
                     </div>
                     <div class="input-box">
-                        <p>Não tem uma conta?<a href="#">Inscrever-se</a></p>
+                        <p>Não tem uma conta? <a href="{{ url_for('register') }}">Inscrever-se</a></p>
                     </div>
                 </form>
                 <h3>Logar com</h3>
@@ -50,7 +50,7 @@
     <h4 class="mb-4 pb-3">Login</h4>
     <form action="{{ url_for('login') }}" method="POST">
     <div class="form-group">
-        <input type="email" class="form-style" placeholder="Email" name="email" required>
+        c
         <i class="input-icon uil uil-at"></i>
     </div>
     <div class="form-group mt-2">

@@ -95,13 +95,13 @@
     text-transform: uppercase;
     margin-bottom: 15px;
     text-align: center;
+    
 
 }
 
 .container-box .form-box .input-box{
     
     margin-bottom: 20px;
-    
     
 
 }
@@ -110,6 +110,7 @@
 
     width: 100%;
     padding: 10px;
+    margin-left: 100px;
     outline: none;
     font-weight: 400;
     border: none;
@@ -124,6 +125,7 @@
 .container-box .form-box .input-box span{
 
     text-align: center;
+    margin-left: 100px;
     font-size: 16px;
     margin-bottom: 5px;
     display: inline-block;
@@ -159,7 +161,8 @@
 }   
 
 .container-box .form-box .remember{
-
+    
+    margin-left: 100px;
     margin-bottom: 20px;
     color: #32324f;
     font-weight: 400;
@@ -184,6 +187,7 @@
 }
 
 .container-box .form-box .input-box p{
+    margin-left: 100px;
     color: #32324f;
 }
 .container-box .form-box .input-box p{
