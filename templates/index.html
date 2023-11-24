@@ -1,23 +1,321 @@
-<!DOCTYPE html>
-<html lang="en">
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>telainicial</title>
-        <link rel="stylesheet" href="{{ url_for('static',filename='estilo.css')}}">
+﻿<!DOCTYPE html>
+    <html lang="pt-br">
+ <head>
+	
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="Barber Shop" content="Barberia" />
+    <meta name="description" content="Template Html5 e Css3 - Tema Barberia"/>
+    <meta name="keywords" content="Barber Shop, Barbeiro, Salão Masculino, Barberia, Barba."/>
+    <meta name="author" content="Loop Nerd" />
+    <meta name="URL" content="https://www.www.loopnerd.com"/>
+    <meta http-equiv="content-language" content="pt-br" />
+    <meta name="robots" content="index, follow"/>
+    
+    <!--[if lt IE 9]>
+        <script src="js/html5shiv.js"></script>
+    <![endif]-->       
 
-    </head>
-    <body>
-        <nav>
-          <a href="/">telainicial</a> 
-          <a href="/loja">loja</a> 
-          <a href="/usuarios">usuario</a> 
-          <a href="/logout">Logout</a>
-   
-        </nav>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='boot.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='style.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='magnific-popup.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='fonts-icones.css')}}">
 
-      <p style="font-size: 20px;">esse e o meu primeiro site https </p>
-     
-    </body>
-    </html>
+ </head>
 
+<body>
+
+<header class="main_header container">
+        
+    <div class="content">
+    
+        <div class="main_header_logo">
+            <a href="/" title="The Barber Shop"><img src="{{ url_for('static',filename='img/bp-.png')}}" alt="The Barber Shop" title="The Barber Shop"/></a>
+        </div>
+
+        <div class="icon icon-menu mobile_action"></div>
+
+        <ul class="main_header_nav">
+
+            <li class="main_header_nav_item"><a href="#inicio" title="Início" class="scrollSuave"> Início</a></li>
+            {% if user %}
+                <li class="main_header_nav_item"><a href="#servicos" title="Serviços" class="scrollSuave"> Serviços</a></li>
+                <li class="main_header_nav_item"><a href="#galeria" title="Galeria de Fotos" class="scrollSuave"> Galeria de Fotos</a></li>
+                <li class="main_header_nav_item"><a href="#contato" title="Contato" class="scrollSuave"> Contato</a></li>
+                <li class="main_header_nav_item"><a href="logout" title="logout"> Logout </a></li>
+            {% else %}
+                <li class="main_header_nav_item"><a href="login" title="login"> Login </a></li>
+            {% endif %}
+
+        </ul>
+
+        <div class="clear"></div>
+    
+    </div>
+
+</header>
+
+    <main class="main_content container">
+
+        <section class="section-chamada container" id="inicio">
+            
+            <div class="content">
+                
+                <article class="topoPag">
+                  <div class="mascara">                              
+                          
+                      <div class="centraliza">
+                          <h1 class="branco"> Barber_Piripiri</h1>
+                          <p class="branco">Cortes de Cabelo Masculino</b></p>
+                      </div>                              
+                                                        
+                    <img src="{{ url_for('static',filename='uploads/capa/banner-home.jpg')}}" alt="Barber Shop" title="Barber Shop"/>
+
+                  </div>
+                </article>
+            
+            <div class="clear"></div>
+            </div>
+
+        </section><!--Fecha Section Chamada-->
+       
+        <section class="section-servicos container" id="servicos">
+            
+            <div class="content">
+                
+                <h1 class="title center azul">Serviços</h1>
+                
+                <article class="hover_servicos">
+
+                    <span class="appIcone icon icon-star-3"></span>
+                    <a href="#" class="appTitulo" title="Corte de Cabelo"> Corte de Cabelo</a>
+                    
+                    <div class="hoverMascara">
+                     <div class="hover_servicos_hover"></div>
+                     <img class="appFoto" src="{{ url_for('static',filename='uploads/servicos/moda-e-estilo.jpg')}}">
+                    </div>
+                    
+                    <div class="descricao">
+                      <h4>Corte de Cabelo</h4>
+                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
+                    </div>
+
+                </article><!--1-->
+
+                <article class="hover_servicos">
+
+                    <span class="appIcone icon icon-star-3"></span>
+                    <a href="#" class="appTitulo" title="Hitratação"> Hitratação</a>
+                    
+                    <div class="hoverMascara">
+                     <div class="hover_servicos_hover"></div>
+                     <img class="appFoto" src="{{ url_for('static',filename='uploads/servicos/saude-e-beleza.jpg')}}">
+                    </div>
+                    
+                    <div class="descricao">
+                      <h4>Hitratação</h4>
+                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
+                    </div>
+
+                </article><!--2-->
+
+                <article class="hover_servicos">
+
+                    <span class="appIcone icon icon-star-3"></span>
+                    <a href="#" class="appTitulo" title="Barba Lenhador"> Barba Lenhador</a>
+                    
+                    <div class="hoverMascara">
+                     <div class="hover_servicos_hover"></div>
+                     <img class="appFoto" src="{{ url_for('static',filename='uploads/servicos/casa-e-decoracao.jpg')}}">
+                    </div>
+                    
+                    <div class="descricao">
+                      <h4>Barba Lenhador</h4>
+                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
+                    </div>
+
+                </article><!--3-->
+            
+            <div class="clear"></div>
+            </div>
+        </section><!--Fecha Section Sobre-->
+        {% if user %}
+            
+            <section class="section-galeria container" id="galeria">
+                
+                <div class="content">
+                    
+                    <h2 class="title center branco">Galeria de Fotos</h2>
+
+                    <div class="galeria-barber">
+                    
+                        <article class="foto">
+                        
+                        <div class="mascara"></div>
+                        <a href="{{ url_for('static',filename='uploads/galeria/1.jpg')}}" title="veja" class="image-link"> <i class="icon icon-search"></i> </a>  
+                        <img src="{{ url_for('static',filename='uploads/galeria/1.jpg')}}">
+            
+                        </article>
+
+                        <article class="foto">
+                        
+                        <div class="mascara"></div>
+                        <a href="{{ url_for('static',filename='uploads/galeria/2.jpg')}}" title="veja" class="image-link"> <i class="icon icon-search"></i> </a>  
+                        <img src="{{ url_for('static',filename='uploads/galeria/2.jpg')}}">
+            
+                        </article>
+
+                        <article class="foto">
+                        
+                        <div class="mascara"></div>
+                        <a href="{{ url_for('static',filename='uploads/galeria/3.jpg')}}" title="veja" class="image-link"> <i class="icon icon-search"></i> </a>  
+                        <img src="{{ url_for('static',filename='uploads/galeria/3.jpg')}}">
+            
+                        </article>
+
+                        <article class="foto">
+                        
+                        <div class="mascara"></div>
+                        <a href="{{ url_for('static',filename='uploads/galeria/4.jpg')}}" title="veja" class="image-link"> <i class="icon icon-search"></i> </a>  
+                        <img src="{{ url_for('static',filename='uploads/galeria/4.jpg')}}">
+            
+                        </article>
+
+                        <article class="foto">
+                        
+                        <div class="mascara"></div>
+                        <a href="{{ url_for('static',filename='uploads/galeria/5.jpg')}}" title="veja" class="image-link"> <i class="icon icon-search"></i> </a>  
+                        <img src="{{ url_for('static',filename='uploads/galeria/5.jpg')}}">
+            
+                        </article>
+
+                        <article class="foto">
+                        
+                        <div class="mascara"></div>
+                        <a href="{{ url_for('static',filename='uploads/galeria/6.jpg')}}" title="veja" class="image-link"> <i class="icon icon-search"></i> </a>  
+                        <img src="{{ url_for('static',filename='uploads/galeria/6.jpg')}}">
+            
+                        </article>
+
+                        <article class="foto">
+                        
+                        <div class="mascara"></div>
+                        <a href="{{ url_for('static',filename='uploads/galeria/7.jpg')}}" title="veja" class="image-link"> <i class="icon icon-search"></i> </a>  
+                        <img src="{{ url_for('static',filename='uploads/galeria/7.jpg')}}">
+            
+                        </article>
+
+                        <article class="foto">
+                        
+                        <div class="mascara"></div>
+                        <a href="{{ url_for('static',filename='uploads/galeria/8.jpg')}}" title="veja" class="image-link"> <i class="icon icon-search"></i> </a>  
+                        <img src="{{ url_for('static',filename='uploads/galeria/8.jpg')}}">
+            
+                        </article>
+
+
+                    </div><!--Galeria Barber-->
+
+                
+                <div class="clear"></div>
+                </div>
+
+            </section><!--Fecha Section Galeria-->
+
+            <section>
+                
+            </section><!--Fecha Section Produtos-->
+
+            <section class="section-contato container" id="contato">
+                
+                <div class="content">
+
+                    <h2 class="title center azul">Fale Conosco</h2>
+                                    
+                    <div class="coluna">
+                        <form method="post" action="#" class="formulario">
+                            
+                            <label>  
+                                
+                                <input type="text" name="nome" class="campo" placeholder="Nome" required="">
+                                
+                            </label>
+                            
+                            <label>  
+                                
+                                <input type="text" name="email" class="campo" placeholder="E-mail" required="">
+                            
+                            </label>
+                            
+                            <label>  
+                                
+                                <textarea name="mensagem" class="campo" placeholder="Deixe sua mensagem" rows="3" required=""></textarea>                    
+                            
+                            </label>
+                            
+                            <label>  
+                                
+                                <input type="hidden" name="acao" value="enviar">
+                                <button class="btn-enviar" title="Enviar">Enviar</button>
+                                
+                            </label>
+                            
+                        </form>
+                        {% if message %}
+                            <p>{{ message }}</p>
+                        {% endif %}
+                        
+                    </div><!---Div Coluna-->
+                    
+                    <div class="coluna design">
+
+                        <div class="info">
+                            <p><i> BARBEIRO ✂️</i></p>
+                            <p><i class="icon icon-mail-3"></i> Barber_Piripiri@gmail.com</p>                    
+                            <p><i class="icon icon-whatsapp"></i> (86)99802-6739 📲</p>
+                            <p><i class="icon icon-pin-1"></i> Local: Centro,Piripiri-PI 🌎🇧🇷</p>
+                            <p><i class="icon icon-calendar"></i> Atendimento: Segunda a Sexta</p>
+                            <p><i class="icon icon-clock-2"></i> 9:00 ás 20:00</p>
+                            <p>> O poder do Barbeiro é a Dedicação 👊💈</p>
+                            <p>> Link para agendamento ⬇️📩</p>
+                            <a href="https://api.whatsapp.com/send/?phone=5586998026739&text=Ol%C3%A1%2C+Gostaria+de+Agendar+um+Hor%C3%A1rio+Para+Mim+%C3%A1s+&type=phone_number&app_absent=0 "><i class="icon icon-calendar"></i> Agendar Horario</a>
+                        
+                        </div>
+
+                        <div class="info">
+
+                            <a href="https://www.instagram.com/barber_piripiri/" class="btn"><span> <i class="icon icon-instagram"></i></span></a>
+                            <a href="#" class="btn"><span> <i class="icon icon-facebook"></i></span></a>
+                            <a href="https://www.youtube.com/shorts/WyknJMP6zDM" class="btn"><span> <i class="icon icon-youtube"></i></span></a>
+                        
+                        </div>
+
+                    </div><!---Div Coluna-->
+                
+                <div class="clear"></div>
+                </div>
+
+            </section><!--Fecha Section Contato-->
+
+        {% endif %}
+
+
+    </main>
+
+<footer class="main_footer container">
+
+    <div class="main_footer_copy">
+        <div class="content">
+            <p class="t-copy-footer"> <b>Barber Piripiri-PI</b> - 2023, Todos os Direitos Reservados.</p> 
+
+        </div>
+    </div>
+
+</footer>
+
+<script src="{{ url_for('static',filename='js/jquery.js')}}"></script>
+<script src="{{ url_for('static',filename='js/scripts.js')}}"></script>	
+<script src="{{ url_for('static',filename='js/jquery.magnific-popup.min.js')}}"></script>
+
+</body>
+</html>

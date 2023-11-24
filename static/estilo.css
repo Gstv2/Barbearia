@@ -1,6 +1,6 @@
 body{
 text-align: center;
-background-image:url("bp.png");
+background-image:url("/static/img/bp.png");
 background-size: cover;
 background-repeat: no-repeat;
 height: 114vh;

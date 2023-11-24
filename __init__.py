@@ -7,6 +7,8 @@ from functools import wraps
 from models.user import Base, User
 from models.produtos import Base, Produtos
 from urllib.parse import quote_plus
+import smtplib
+from email.message import EmailMessage
 import os
 
 # Resto do código sem importações circulares
@@ -26,7 +28,7 @@ def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if 'user_email' not in session:
-            return redirect('/login')
+            return redirect('/')
         return f(*args, **kwargs)
     return decorated_function
 
@@ -34,20 +36,53 @@ def login_required(f):
 @login_required
 def logout():
     session.pop('user_email', None)
-    return redirect('/login')
+    return redirect('/')
 
 
-@app.route("/")
-@login_required
+@app.route('/', methods=['GET', 'POST'])
 def index():
-    return render_template("index.html")
+    message = ''  # Variável para armazenar a mensagem a ser exibida na tela
+    nome = ''  # Reinicialização da variável nome
+    email = ''  # Reinicialização da variável email
+    mensagem = ''  # Reinicialização da variável mensagem
+    
+    if request.method == 'POST':
+        nome = request.form['nome']
+        email = request.form['email']
+        mensagem = request.form['mensagem']
+
+        # Aqui você pode adicionar a lógica para enviar o email
+        # Substitua 'seu_email@gmail.com' pelo seu email real
+        # Substitua 'sua_senha' pela senha do seu email real
+        msg = EmailMessage()
+        msg.set_content(f'Nome: {nome}\nEmail: {email}\nMensagem: {mensagem}')
+
+        msg['Subject'] = 'Novo formulário submetido'
+        msg['From'] = 'nerysilva2006@gmail.com'
+        msg['To'] = 'nerysilva2006@gmail.com'  # Substitua pelo destinatário real
+
+        try:
+            with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+                smtp.login('nerysilva2006@gmail.com', 'epgqpcgsghewdifm')
+                smtp.send_message(msg)
+            message = 'Email enviado com sucesso!'
+            nome = ''
+            email = ''
+            mensagem = ''
+            return render_template('index.html', message=message)
+        except smtplib.SMTPException as e:
+            message = f'Ocorreu um erro ao enviar o email: {e}'
+            return render_template('index.html', message=message)
+        
+    user_email = session.get('user_email', None)
+    user = db_session.query(User).filter_by(email=user_email).first()
+    return render_template('index.html',user=user)
 
 @app.route("/loja")
 @login_required
 def loja():
     try:
         produtos = db_session.query(Produtos).all()  # Query all products
-
         return render_template("loja.html", produtos=produtos)
     except Exception as e:
         # Lide com exceções, se necessário
@@ -65,7 +100,8 @@ def login():
             if user:
                 session['user_email'] = user.email
                 db_session.commit()  # Commit a transação bem-sucedida
-                return redirect('/loja')
+                db_session.close()
+                return redirect('/')
             else:
                 mensagem_erro = 'E-mail ou senha incorretos. Verifique suas credenciais.'
                 return render_template('login.html', mensagem_erro=mensagem_erro)
@@ -97,15 +133,6 @@ def register():
             return render_template('register.html', mensagem_erro=mensagem_erro)
 
     return render_template("register.html")
-
-
-@app.route("/usuarios")
-@login_required
-def usuarios():
-    user_email = session['user_email']
-    user = db_session.query(User).filter_by(email=user_email).first()
-    return render_template("usuarios.html", user=user)
-
 
 
 # Função para remover uma produto

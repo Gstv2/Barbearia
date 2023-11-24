@@ -3,19 +3,49 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>loja</title>
-        <link rel="stylesheet" href="{{ url_for('static',filename='estilo_loja.css')}}">
+        <title>tela de login</title>
+        <link rel="stylesheet" href="{{ url_for('static',filename='style-login.css')}}">
 
 </head>
 <body>
-    <nav>
-        <a href="/">telainicial</a> |
-        <a href="/loja">loja</a> |
-        <a href="/usuarios">usuario</a>
-        <a href="/login">Login</a>
-        <a href="/register">register</a>
-   
-  
+    <div class="container-login">
+        <div class="img-box">
+            <img src="{{ url_for('static',filename='uploads/capa/banner-home.jpg')}}" alt="">
+        </div>
+        <div class="container-box">
+            <div class="form-box">
+                <h2>Login</h2>
+                <form class="form-box" action="{{ url_for('login') }}" method="POST">
+                    <div class="input-box">
+                        <span>Username</span>
+                        <input type="email" placeholder="@gmail.com">
+                    </div>
+                    <div class="input-box">
+                        <span>password</span>
+                        <input type="password" placeholder="password">
+                    </div>
+                    <div class="remember">
+                        <label>
+                            <input type="checkbox">lembrar
+                            <a href="#">Esqueceu a Senha?</a>
+                        </label>
+                    </div>
+                    <div class="input-box">
+                        <input type="submit" placeholder="Entrar">
+                    </div>
+                    <div class="input-box">
+                        <p>Não tem uma conta?<a href="#">Inscrever-se</a></p>
+                    </div>
+                </form>
+                <h3>Logar com</h3>
+                <ul class="ul">
+                    <li><img src="{{ url_for('static',filename='img/facebook.png')}}"></li>
+                    <li><img src="{{ url_for('static',filename='img/google.png')}}"></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+<!-- 
     </nav>
     <h4 class="mb-4 pb-3">Login</h4>
     <form action="{{ url_for('login') }}" method="POST">
@@ -28,7 +58,6 @@
         <input type="checkbox" id="chk"> mostrar
         <i class="input-icon uil uil-lock-alt"></i>
     </div>
-    <button type="submit" class="btn mt-4">Login</button>
-    
+    <button type="submit" class="btn mt-4">Login</button> -->
 </body>
 </html>
