@@ -6,6 +6,8 @@ from sqlalchemy.inspection import inspect
 from functools import wraps
 from models.user import Base, User
 from models.produtos import Base, Produtos
+from models.servicos import Base, Servicos
+from models.shopping_cart_items import Base, ShoppingCartItem
 from urllib.parse import quote_plus
 import smtplib
 from email.message import EmailMessage
@@ -88,6 +90,33 @@ def loja():
         # Lide com exceções, se necessário
         db_session.rollback()
         return "Erro: " + str(e)
+    
+# Rota para adicionar um produto ao carrinho
+@app.route('/adicionar_produto', methods=['POST'])
+@login_required
+def adicionar_produto():
+    data = request.get_json()
+    produto_id = data['produto_id']
+    quantidade = data['quantidade']
+
+    # Supondo que você tenha um sistema de autenticação e o email do usuário esteja disponível
+    user_email = session["user_email"] # Substitua pelo email do usuário autenticado
+
+    # Verifique se o item já está no carrinho do usuário
+    item_existente = ShoppingCartItem.query.filter_by(user_email=user_email, product_id=produto_id).first()
+
+    if item_existente:
+        # Se o item já estiver no carrinho, atualize a quantidade
+        item_existente.quantity += quantidade
+    else:
+        
+        # Caso contrário, crie um novo item no carrinho
+        novo_item = ShoppingCartItem(product_id=produto_id, quantity=quantidade)
+        db_session.add(novo_item)
+        db_session.commit()
+
+
+    return jsonify({'status': 'Produto adicionado ao carrinho com sucesso!'})
 
 # Rota para o login
 @app.route('/login', methods=['GET', 'POST'])
@@ -123,10 +152,11 @@ def register():
         senha = request.form['senha']
         try:
             new_user = User(email=email, telefone=telefone, nome=nome, senha=senha)
+
             db_session.add(new_user)
             db_session.commit()
             session['user_email'] = new_user.email
-            return redirect('/')
+            return redirect("/add_carrinho")
         except Exception as e:
             db_session.rollback()
             mensagem_erro = 'Usuário já existente.'
@@ -135,6 +165,18 @@ def register():
     return render_template("register.html")
 
 
+
+# Função para remover uma produto
+@app.route('/add_carrinho')
+@login_required
+def add_carrinho():
+    user_email = session["user_email"]
+
+    new_car = ShoppingCartItem(user_email=user_email)
+    db_session.add(new_car)
+    db_session.commit()
+    return redirect("/")
+    
 # Função para remover uma produto
 @app.route('/remove_product/<int:produto_id>', methods=['DELETE'])
 @login_required
